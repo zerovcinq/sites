@@ -1,46 +1,54 @@
 <!DOCTYPE html>
-<html>
-    <body style="background-color:#0F0F0F">
-        <p id="time" style="text-align:center;font-size:37px;color:#5A5A5A"></p>
+<html style="height:100%">
+    <body style="background-color:#0F0F0F;height:100%">
+        <div style="overflow:auto;height:84%">
+            <p id="time" style="text-align:center;font-size:37px;color:#5A5A5A"></p>
 
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">====</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
-        <p style="text-align:center;font-size:37px;color:#5A5A5A">====</p>
-        <script>
-            var date = new Date();
-            if(date.getHours() < 6){
-                document.getElementById("time").innerHTML = "凌晨 ";
-            }else if(date.getHours() < 12){
-                document.getElementById("time").innerHTML = "上午 ";
-            }else{
-                document.getElementById("time").innerHTML = "下午 ";
-            }
-            document.getElementById("time").innerHTML += date.getHours() + ":" + date.getMinutes();
-        </script>
-        <footer>
-            <img src="input.png" width="100%" style="position:absolute; bottom:0px; flex:1"/>
-        <footer/>
-
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">====</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+                       <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+                       <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">+</p>
+            <p style="text-align:center;font-size:37px;color:#5A5A5A">====</p>
+            <script>
+                var date = new Date();
+                if(date.getHours() < 6){
+                    document.getElementById("time").innerHTML = "凌晨 ";
+                }else if(date.getHours() < 12){
+                    document.getElementById("time").innerHTML = "上午 ";
+                }else{
+                    document.getElementById("time").innerHTML = "下午 ";
+                }
+                document.getElementById("time").innerHTML += date.getHours() + ":" + date.getMinutes();
+            </script>
+        </div>
+        <img src="input.png" width="100%" style="position:fixed;bottom:0px"></img>
     </body>
 </html>
