@@ -1,13 +1,19 @@
+<!DOCTYPE html>
 <html>
+    <body bgcolor=#0F0F0F>
+        <p id="time" style="color:#5A5A5A"></p>
 
-<head>
-  这里是文档的头部 ... ...
-  ...
-</head>
+        <script>
+            var date = new Date();
+            if(date.getHours() < 6){
+                document.getElementById("time").innerHTML = "凌晨 ";
+            }else if(date.getHours() < 12){
+                document.getElementById("time").innerHTML = "上午 ";
+            }else{
+                document.getElementById("time").innerHTML = "下午 ";
+            }
+            document.getElementById("time").innerHTML += date.getHours() + ":" + date.getMinutes();
+        </script>
 
-<body>
-  这里是文档的主体 ... ...
-  ...
-</body>
-
+    </body>
 </html>
