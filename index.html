@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html style="height:100%">
     <head>
-        <title>《趣玩》叁缺壹(493)</title>
+        <title>《趣玩》叁缺壹(494)</title>
     </head>
     <body style="background-color:#0F0F0F;height:100%">
-        <div style="overflow:auto;height:84%">
+        <div id=chatbox style="overflow:auto;height:84%">
             <p id="time" style="text-align:center;font-size:37px;color:#5A5A5A"></p>
+            <div id="log">
+            </div>
             <script>
                 var date = new Date();
                 if(date.getHours() < 6){
@@ -16,6 +18,46 @@
                     document.getElementById("time").innerHTML = "下午 ";
                 }
                 document.getElementById("time").innerHTML += date.getHours() + ":" + date.getMinutes();
+
+                var fnames = ["夏", "丁", "余", "丘", "赵", "钱", "孙", "李", "周", "吴", "郑", "王", "陶", "金城", "何", "邱", "刘", "余", "蒲", "梁", "张", "章", "石田", "小野", "木村", "杉田", "樱井", "郭", "谭", "黄", "成", "易", "伊能", "郁", "陈", "江", "姜", "庾", "崔", "沙", "谢", "蔡", "马", "蒋", "宋", "孔", "费", "屠", "翟", "胡", "林", "杨", "牛", "朱", "金", "尚", "肖", "萧", "任", "辛", "彭", "邝", "袁", "邓", "毛", "满", "古", "许", "徐", "苏", "宇文", "南宫", "朴", "全", "龚", "巩", "冯", "高", "鞠", "白", "曾", "撒", "钟", "苍井", "石原", "小栗", "山下", "菅田", "羽生", "道枝", "矢野", "三浦", "神谷", "妻夫", "山本", "山岸", "北野", "山田", "古川", "佐藤"];
+                var gnames = ["清河", "放", "适宇", "爱姗", "小毛", "大可", "杰伦", "静茹", "学友", "德华", "富城", "力宏", "云迪", "咏麟", "家驹", "咏琪", "燕姿", "碧晨", "晨宇", "烊千玺", "俊凯", "可唯", "宗盛", "奕迅", "育恒", "澄庆", "霆锋", "宝亮", "国庆", "大为", "百强", "健雅", "中基", "智化", "玉清", "洪刚", "海泉", "羽凡", "绮珊", "忆莲", "依轮", "雯婕", "贯中", "宗纬", "敬腾", "志炫", "思纯", "晓鸥", "晓琪", "佳慧", "惟仁", "华健", "品冠", "光良", "紫棋", "笔畅", "宇春", "文军", "丽玲", "彦斌", "彦祖", "靓颖", "巨基", "洁仪", "淳元", "煌奇", "荣浩", "维维", "娅维", "佳薇", "致列", "克勤", "佳莹", "见信", "信宏", "信哲", "祖儿", "琳娜", "韶涵", "运莹", "志文", "圣杰", "晓东", "定安", "青峰", "乃文", "宇宁", "靖韵", "云龙", "程昱", "鸣鹤", "红川", "书尽", "楚生", "不易", "举纲", "敬亭", "一鸣", "贝宁", "亦凡"];
+                var distrincts = ["宝安","光明","龙华","南山","龙岗","福田","罗湖","大鹏","盐田","坪山"];
+                var instruments = ["钢琴","吉他","贝司","键盘","口风琴","口琴","鼓","唱","小提琴","大提琴","长笛","电吹管","合成器","观众","竖琴","萨克斯","沙锤","三角铁","中提琴","木琴","马林巴","卡林巴","古筝","二胡","箫","手风琴","定音鼓","小号","长号","大号","圆号","唢呐","卡祖笛","电音蝌蚪","尤克里里","黑管","双簧管","竖笛","尺八","三味线","西塔琴","班卓琴","苏格兰风笛"];
+                var postfixes = [];
+                var count = 0;
+                function tap(card, name){
+                    document.getElementById("log").innerHTML += "<p style=\"text-align:center;font-size:37px;color:#5A5A5A\">我拍了拍\"" + name + "\"</p>";
+                    document.getElementById("chatbox").scrollTop = document.getElementById("chatbox").scrollHeight;
+                }
+                function newMsg(){
+                    var ate = document.getElementById("chatbox").scrollTop + document.getElementById("chatbox").clientHeight == document.getElementById("chatbox").scrollHeight;
+                    var tname = distrincts[Math.floor(Math.random() * distrincts.length)]
+                            + "-"
+                            + instruments[Math.floor(Math.random() * instruments.length)]
+                            + "-"
+                            + fnames[Math.floor(Math.random() * fnames.length)]
+                            + gnames[Math.floor(Math.random() * gnames.length)];
+                    document.getElementById("log").innerHTML += "<table width=100%><td width=17% valign=top><img ondblclick=\"tap(this, '"
+                            + tname
+                            + "')\" style=\"position:relative;left:18%;top:50px;border-radius:11%\" src=\""
+                            + Math.floor(Math.random() * 100)
+                            + ".jpeg\" width=63%></td><td><p style=\"font-size:32px;color:#606060\">"
+                            + tname
+                            + "</p><img src=\"p"
+                            + Math.floor(Math.random() * 5)
+                            + ".jpeg\" width=\"45%\"></td></table>";
+                    if(ate){
+                        document.getElementById("chatbox").scrollTop = document.getElementById("chatbox").scrollHeight;
+                    }else{
+                    }
+                    count++;
+                    if(count < 100){
+                        setTimeout(newMsg, Math.floor(Math.random() * 10000) + 500);
+                    }else{
+                        alert("差不多得了");
+                    }
+                }
+                newMsg();
             </script>
         </div>
         <img src="input.png" width="100%" style="position:fixed;bottom:0px"></img>
