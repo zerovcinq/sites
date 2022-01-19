@@ -129,19 +129,6 @@
             }
 
             function play(){
-                if(attacking){
-                    var onlyA = true;
-                    for(var i = 0; i < noc; i++){
-                        if(chosen[i] && cards[i][0] != "a"){
-                            onlyA = false;
-                            break;
-                        }
-                    }
-                    if(onlyA){
-                        return;
-                    }
-                }
-
                 var pc = [];
                 var pn = 0;
                 var vac = 0;
@@ -192,8 +179,11 @@
                 if(attacking){
                     for(var i = 0; i < pc.length; i++){
                         if(pc[i] == "h"){
-                            var sup = pn > nod ? nod : pn;
-                            not = randPop(drop, nod, tile, not, sup);
+                            var sup = pn > (nod - vac) ? (nod - vac) : pn;
+                            not = randPop(drop, nod - vac, tile, not, sup);
+                            for(var j = nod - vac - sup; j < nod - sup; j++){
+                                drop[j] = drop[j + sup];
+                            }
                             nod -=sup;
                         }else if(pc[i] == "s"){
                             atk -= pn;
@@ -259,10 +249,9 @@
                                 ci.push(i);
                             }
                         }
-                        if(ci.length == 1 && (cards[ci[0]][0] == "a" && cards[pos][0] != "a" || cards[ci[0]][0] != "a" && cards[pos][0] == "a" )){
+                        if(ci.length == 1 && (cards[ci[0]][0] == "a" || cards[pos][0] == "a" )){
                         }else if(
                             ci.length > 0
-                            && cards[ci[0]][0] != "a"
                             && (cards[ci[0]][0] == "2" || cards[ci[0]][0] == "3" || cards[ci[0]][0] == "4" || cards[ci[0]][0] == "5")
                             && cards[ci[0]][0] == cards[pos][0]
                             && parseInt(cards[pos][0]) * (ci.length + 1) <= 10){
