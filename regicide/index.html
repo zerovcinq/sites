@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html style="height:100%">
+    <head>
+        <meta name="viewport" content="user-scalable=0">
+        <style type="text/css">
+        img {border-radius:5%;height:26%;position:absolute}
+        p {font-size:45px;position:absolute;color:#FFFFFF;top:27.1%}
+        </style>
+    </head>
+    <body style="width:100%;height:100%;overflow:hidden;background-color:#000000">
+
+        <img id="jd" style="left:7%;top:1.1%">
+        <img id="ju">
+
+        <img src="tile.jpg" style="right:7%;top:1.1%">
+        <img id="boss" style="right:7%">
+
+        <p id=guide style="left:7%"></p>
+        <p id=state style="right:7%"></p>
+
+        <img src="tile.jpg" style="left:7%;top:40%">
+        <img id="tile" style="left:7%">
+
+        <img src="tile.jpg" style="right:7%;top:40%">
+        <img id="drop" onclick="play()" style="right:7%">
+
+        <img id="card0" onclick="choose(0)" style="top:74%">
+        <img id="card1" onclick="choose(1)" style="top:74%">
+        <img id="card2" onclick="choose(2)" style="top:74%">
+        <img id="card3" onclick="choose(3)" style="top:74%">
+        <img id="card4" onclick="choose(4)" style="top:74%">
+        <img id="card5" onclick="choose(5)" style="top:74%">
+        <img id="card6" onclick="choose(6)" style="top:74%">
+        <img id="card7" onclick="choose(7)" style="top:74%">
+        <script>
+            var bosses = new Array(12);
+            var colors = ['h','s','c','d'];
+            var n = ['j', 'q', 'k'];
+            for(var j = 0; j < 3; j++){
+                for(var i = 0; i < 4; i++){
+                    var ri = Math.floor(Math.random() * (4 - i));
+                    bosses[j * 4 + i] = n[j] + colors[ri];
+                    var temp = colors[ri];
+                    colors[ri] = colors[3 - i];
+                    colors[3 - i] = temp;
+                }
+            }
+            //init
+            var bossi = 0;
+            var chosen = [false, false, false, false, false, false, false, false];
+            var attacking = true;
+
+            var cards = new Array(8);
+            var noc = 0;
+            var tile = new Array(51);
+            var not = 0;
+            var drop = new Array(51);
+            var nod = 0;
+            var ju = 0;
+
+            var all = new Array(40);
+            for(var i = 0; i < 4; i++){
+                for(var j = 0; j < 10; j++){
+                    if(j == 0){
+                        n = 10;
+                    }else if(j == 1){
+                        n = 'a';
+                    }else{
+                        n = j;
+                    }
+                    all[i * 10 + j] = n + colors[i];
+                }
+            }
+            not = randPop(all, 40, tile, not, 32);
+            noc = randPop(all, 8, cards, noc, 8);
+            //show
+
+            var atk;
+            var hp;
+            var tba;
+
+            initBoss();
+
+            update();
+
+            function initBoss(){
+                if(bossi == 12){
+                    var joke = ["牛逼！", "有点勉强……", "凑合也算过了吧。"];
+                    alert("赢了！" + joke[ju]);
+                    window.location.reload();
+                }
+                atk = (Math.floor(bossi / 4) + 1) * 5 + 5;
+                hp = atk * 2;
+            }
+            function update(){
+                for(var i = 0; i < noc; i++){
+                    document.getElementById("card" + i).src = cards[i] + ".jpg";
+                    document.getElementById("card" + i).style.left = 100 / noc * i + "%";
+                    document.getElementById("card" + i).style.top = chosen[i] ? "66%" : "74%";
+                }
+                for(var i = noc; i < 8; i++){
+                    document.getElementById("card" + i).style.left = "100%";
+                }
+
+                if(ju < 2){
+                    document.getElementById("ju").src = ju < 1 ? "back.jpg" : "sj.jpg";
+                    document.getElementById("ju").style.top = "1%";
+                    document.getElementById("ju").style.left = "7%";
+                    document.getElementById("jd").src = "tile.jpg";
+                }else{
+                    document.getElementById("ju").src = "bj.jpg";
+                    document.getElementById("ju").style.top = "0%";
+                    document.getElementById("ju").style.left = "0%";
+                    document.getElementById("jd").src = "sj.jpg";
+
+                }
+
+                document.getElementById("boss").src = bosses[bossi] + ".jpg";
+                document.getElementById("boss").style.top = bossi / 10 + "%";
+
+                document.getElementById("drop").src = (nod > 0 ? drop[nod - 1] : "drop") + ".jpg";
+                document.getElementById("drop").style.top = (40 - (nod - 1) / 10) + "%";
+
+                document.getElementById("tile").src = (not > 0 ? "back" : "drop") + ".jpg";
+                document.getElementById("tile").style.top = (40 - (not - 1) / 10) + "%";
+
+                document.getElementById("state").innerHTML = "攻击力:" + atk + " 生命:" + hp;
+                document.getElementById("guide").innerHTML = attacking ? "请攻击" : "请承受" + tba + "点伤害";
+            }
+
+            function play(){
+                if(attacking){
+                    var onlyA = true;
+                    for(var i = 0; i < noc; i++){
+                        if(chosen[i] && cards[i][0] != "a"){
+                            onlyA = false;
+                            break;
+                        }
+                    }
+                    if(onlyA){
+                        return;
+                    }
+                }
+
+                var pc = [];
+                var pn = 0;
+                var vac = 0;
+                for(var i = 0; i < noc; i++){
+                    if(chosen[i]){
+                        vac++;
+                        if(cards[i][0] == "a"){
+                            pn += 1;
+                        }else if(cards[i][0] == "1"){
+                            pn += 10;
+                        }else if(cards[i][0] == "j"){
+                            pn += 10;
+                        }else if(cards[i][0] == "q"){
+                            pn += 15;
+                        }else if(cards[i][0] == "k"){
+                            pn += 20;
+                        }else{
+                            pn += parseInt(cards[i][0]);
+                        }
+                        if(attacking){
+                            var c = cards[i][0] == "1" ? cards[i][2] : cards[i][1];
+                            if(c != bosses[bossi][1]){
+                                var found = false;
+                                for(var j = 0; j < pc.length; j++){
+                                    if(pc[j] == c){
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                                if(!found){
+                                    pc.push(c);
+                                    if(c == "h" && pc.length > 1){
+                                        pc[pc.length - 1] = pc[0];
+                                        pc[0] = c;
+                                    }
+                                }
+                            }
+                        }
+                        drop[nod] = (cards[i]);
+                        nod += 1;
+                    }else{
+                        cards[i - vac] = cards[i];
+                    }
+                }
+                noc -= vac;
+                chosen.fill(false);
+
+                if(attacking){
+                    for(var i = 0; i < pc.length; i++){
+                        if(pc[i] == "h"){
+                            var sup = pn > nod ? nod : pn;
+                            not = randPop(drop, nod, tile, not, sup);
+                            nod -=sup;
+                        }else if(pc[i] == "s"){
+                            atk -= pn;
+                            if(atk < 0){
+                                atk = 0;
+                            }
+                        }else if(pc[i] == "c"){
+                            hp -= pn;
+                        }else{
+                            var drawN = 8 - noc;
+                            if(drawN > not){
+                                drawn = not;
+                            }
+                            draw(drawN > pn ? pn : drawN);
+                        }
+                    }
+                    hp -= pn;
+                    if(hp > 0){
+                        if(atk > 0){
+                            attacking = false;
+                        }
+                    }else if(hp == 0){
+                        for(var i = 0; i < not; i++){
+                            tile[not - i] = tile[not - i - 1];
+                        }
+                        tile[0] = bosses[bossi];
+                        not++;
+                        bossi++;
+                        initBoss();
+                    }else{
+                        drop[nod] = bosses[bossi];
+                        nod++;
+                        bossi++;
+                        initBoss();
+                    }
+                    tba = atk;
+                }else{
+                    tba -= pn;
+                    if(tba <= 0){
+                        attacking = true;
+                    }
+                }
+                if(noc == 0){
+                    if(ju < 2 && not > 0){
+                        ju++;
+                        draw(not < 8 ? not : 8);
+                    }else{
+                        alert("你输了，你啥也不是。");
+                        window.location.reload();
+                    }
+                }
+                update();
+            }
+
+            function choose(pos){
+                if(chosen[pos]){
+                    chosen[pos] = false;
+                }else{
+                    if(attacking){
+                        var ci = [];
+                        for(var i = 0; i < noc; i++){
+                            if(chosen[i]){
+                                ci.push(i);
+                            }
+                        }
+                        if(ci.length == 1 && (cards[ci[0]][0] == "a" && cards[pos][0] != "a" || cards[ci[0]][0] != "a" && cards[pos][0] == "a" )){
+                        }else if(
+                            ci.length > 0
+                            && cards[ci[0]][0] != "a"
+                            && (cards[ci[0]][0] == "2" || cards[ci[0]][0] == "3" || cards[ci[0]][0] == "4" || cards[ci[0]][0] == "5")
+                            && cards[ci[0]][0] == cards[pos][0]
+                            && parseInt(cards[pos][0]) * (ci.length + 1) <= 10){
+                        }else{
+                            for(var i = 0; i < ci.length; i++){
+                                chosen[ci[i]] = false;
+                            }
+                        }
+                    }
+                    chosen[pos] = true;
+                }
+                for(var i = 0; i < noc; i++){
+                    document.getElementById("card" + i).style.top = chosen[i] ? "66%" : "74%";
+                }
+            }
+
+            function randPop(from, nof, to, not, nop){
+                for(var i = 0; i < nop; i++){
+                    var ri = Math.floor(Math.random() * (nof - i));
+                    to[not + i] = from[ri];
+                    from[ri] = from[nof - 1 - i];
+                }
+                return not + nop;
+            }
+
+            function draw(n){
+                for(var j = 0; j < n; j++){
+                    cards[noc + j] = tile[j];
+                }
+                noc += n;
+                for(var j = n; j < not; j++){
+                    tile[j - n] = tile[j];
+                }
+                not -= n;
+            }
+        </script>
+    </body>
+</html>
