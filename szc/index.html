@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html style="height:100%">
+    <head>
+        <meta name="viewport" content="user-scalable=0">
+        <style type="text/css">
+        img {position:absolute}
+        </style>
+        <title>我真是太厉害，在「山楂串」中竟然得了0分，全球只有1个人得0分</title>
+    </head>
+    <body style="height:100%;overflow:hidden">
+        <img src="top.jpg" style="width:100%;height:20%;left:0%;top:0%">
+        <img src="drop.jpg" style="width:100%;height:22%;left:0%;top:20%">
+        <img src="tip.jpg" style="width:100%;height:3%;left:0%;top:42%">
+        <img src="needle.jpg" style="width:100%;height:50%;left:0%;top:45%">
+        <img src="bottom.jpg" style="width:100%;height:5%;left:0%;top:95%">
+
+
+        <img id="n00" onclick="choose(0)"> <img id="n01" onclick="choose(0)"> <img id="n02" onclick="choose(0)"> <img id="n03" onclick="choose(0)"> <img id="n04" onclick="choose(0)"> <img id="n05" onclick="choose(0)"> <img id="n06" onclick="choose(0)">
+        <img id="n10" onclick="choose(1)"> <img id="n11" onclick="choose(1)"> <img id="n12" onclick="choose(1)"> <img id="n13" onclick="choose(1)"> <img id="n14" onclick="choose(1)"> <img id="n15" onclick="choose(1)"> <img id="n16" onclick="choose(1)">
+        <img id="n20" onclick="choose(2)"> <img id="n21" onclick="choose(2)"> <img id="n22" onclick="choose(2)"> <img id="n23" onclick="choose(2)"> <img id="n24" onclick="choose(2)"> <img id="n25" onclick="choose(2)"> <img id="n26" onclick="choose(2)">
+        <img id="n30" onclick="choose(3)"> <img id="n31" onclick="choose(3)"> <img id="n32" onclick="choose(3)"> <img id="n33" onclick="choose(3)"> <img id="n34" onclick="choose(3)"> <img id="n35" onclick="choose(3)"> <img id="n36" onclick="choose(3)">
+        <img id="n40" onclick="choose(4)"> <img id="n41" onclick="choose(4)"> <img id="n42" onclick="choose(4)"> <img id="n43" onclick="choose(4)"> <img id="n44" onclick="choose(4)"> <img id="n45" onclick="choose(4)"> <img id="n46" onclick="choose(4)">
+        <img id="n50" onclick="choose(5)"> <img id="n51" onclick="choose(5)"> <img id="n52" onclick="choose(5)"> <img id="n53" onclick="choose(5)"> <img id="n54" onclick="choose(5)"> <img id="n55" onclick="choose(5)"> <img id="n56" onclick="choose(5)">
+        <img id="p00" onclick="choose(0)"> <img id="p01" onclick="choose(0)">
+        <img id="p10" onclick="choose(1)"> <img id="p11" onclick="choose(1)">
+        <img id="p20" onclick="choose(2)"> <img id="p21" onclick="choose(2)">
+        <img id="p30" onclick="choose(3)"> <img id="p31" onclick="choose(3)">
+        <img id="p40" onclick="choose(4)"> <img id="p41" onclick="choose(4)">
+        <img id="p50" onclick="choose(5)"> <img id="p51" onclick="choose(5)">
+        <img id="d0" onclick="choose(0)"> <img id="d1" onclick="choose(1)"> <img id="d2" onclick="choose(2)"> <img id="d3" onclick="choose(3)"> <img id="d4" onclick="choose(4)"> <img id="d5" onclick="choose(5)">
+        <img id="banner" style="width:9%;left:13%;top:3%">
+        <p style="position:absolute;left:20%;top:3%;font-size:45px;color:#E28132"><b id="score"></b></p>
+        <script>
+            for(var i = 0; i < 6; i++){
+                for(var j =0; j < 7; j++){
+                    document.getElementById("n" + i + j).style.left = (76 / 5) * i + 7 + "%";
+                    document.getElementById("n" + i + j).style.width = "12%";
+                    document.getElementById("n" + i + j).style.top = 45 + 50 / 7 * (6 - j) + "%";
+                    document.getElementById("n" + i + j).src = "1.jpg";
+                }
+                for(var j =0; j < 2; j++){
+                    document.getElementById("p" + i + j).style.left = (76 / 5) * i + 7 + "%";
+                    document.getElementById("p" + i + j).style.width = "12%";
+                    document.getElementById("p" + i + j).style.bottom = 58 + 50 / 7 * j + "%";
+                    document.getElementById("p" + i + j).src = "1.jpg";
+                }
+                document.getElementById("d" + i).style.left = (76 / 5) * i + 8 + "%";
+                document.getElementById("d" + i).style.width = "10%";
+                document.getElementById("d" + i).style.top = "20%";
+                document.getElementById("d" + i).src = "1.jpg";
+            }
+
+            var score = 0;
+            var max = 0;
+            var picki = -1;
+            var moved = 0;
+
+            var fruits = new Array(6);
+            var pick = new Array(6);
+            var drop = [0, 0, 0, 0, 0, 0];
+            for(var i = 0; i < 6; i++){
+                fruits[i] = [1, 1, 0, 0, 0, 0, 0];
+                pick[i] = [0, 0];
+            }
+            var tof = [2, 2, 2, 2, 2, 2];
+
+            update();
+            function choose(n){
+                if(picki == -1){
+                    if(fruits[n][0] > 0){
+                        picki = n;
+                        pick[n][0] = fruits[n][tof[n] - 1];
+                        fruits[n][tof[n] - 1] = 0;
+                        tof[n]--;
+                        if(tof[n] > 0 && pick[n][0] == fruits[n][tof[n] - 1]){
+                            pick[n][1] = pick[n][0];
+                            fruits[n][tof[n] - 1] = 0;
+                            tof[n]--;
+                        }
+                    }
+                }else{
+                    combine(n, pick[picki]);
+                    pick[picki][0] = 0;
+                    pick[picki][1] = 0;
+                    if(picki != n){
+                        moved++;
+                        if(moved == 3){
+                            for(var i = 0; i < 6; i++){
+                                //drop[i] = Math.floor(Math.random() * (max > 8 ? 8 : max)) + 1;
+                                if(tof[i] > 0){
+                                    drop[i] = fruits[i][tof[i] - 1];
+                                }else{
+                                    drop[i] = Math.floor(Math.random() * (max > 8 ? 8 : max)) + 1;
+                                }
+                            }
+                        }else if(moved > 3){
+                            for(var i = 0; i < 6; i++){
+                                combine(i, [drop[i], 0]);
+                            }
+                            drop.fill(0);
+                            moved = 0;
+                        }
+                    }
+                    picki = -1;
+                }
+                update();
+            }
+
+            function checkMax(n){
+                if(fruits[n][tof[n] - 1] > max){
+                    max = fruits[n][tof[n] - 1];
+                }
+                if(fruits[n][tof[n] - 1] == 9){
+                    fruits[n][tof[n] - 1] = 0;
+                    tof[n]--;
+                    score++;
+                    var noMore = true;
+                    for(var i = 0; i < 6; i++){
+                        if(tof[i] > 0){
+                            noMore = false;
+                            break;
+                        }
+                    }
+                    if(noMore){
+                        alert("这么玩有意思？");
+                        window.location.reload();
+                    }
+                }
+            }
+
+            function combine(n, cfrom){
+                if(tof[n] > 1 && fruits[n][tof[n] - 1] == fruits[n][tof[n] - 2] && fruits[n][tof[n] - 1] == cfrom[0]){
+                    fruits[n][tof[n] - 1] = 0;
+                    fruits[n][tof[n] - 2]++;
+                    tof[n]--;
+                    checkMax(n);
+                }else if(tof[n] > 0 && fruits[n][tof[n] - 1] == cfrom[0] && cfrom[0] == cfrom[1]){
+                    fruits[n][tof[n] - 1]++;
+                    checkMax(n);
+                }else{
+                    if(cfrom[0] > 0 && tof[n] > 6 || tof[n] > 5 && cfrom[1] > 0){
+                        alert("这你都能输，我实在帮不了你了……");
+                        window.location.reload();
+                    }else{
+                        fruits[n][tof[n]] = cfrom[0];
+                        tof[n]++;
+                        if(cfrom[1] > 0){
+                            fruits[n][tof[n]] = cfrom[1];
+                            tof[n]++;
+                        }
+                    }
+                }
+                while(tof[n] > 2 && fruits[n][tof[n] - 1] == fruits[n][tof[n] - 2] && fruits[n][tof[n] - 1] == fruits[n][tof[n] - 3]){
+                    fruits[n][tof[n] - 3]++;
+                    fruits[n][tof[n] - 2] = 0;
+                    fruits[n][tof[n] - 1] = 0;
+                    tof[n] -= 2;
+                    checkMax(n);
+                }
+
+            }
+            function update(){
+                for(var i = 0; i < 6; i++){
+                    for(var j = 0; j < 7; j++){
+                        if(fruits[i][j] > 0){
+                            document.getElementById("n" + i + j).style.opacity = 1;
+                            document.getElementById("n" + i + j).src = fruits[i][j] + ".jpg";
+                        }else{
+                            document.getElementById("n" + i + j).style.opacity = 0;
+                        }
+                    }
+                    for(var j = 0; j < 2; j++){
+                        if(pick[i][j] > 0){
+                            document.getElementById("p" + i + j).src = pick[i][j] + ".jpg";
+                            document.getElementById("p" + i + j).style.opacity = 1;
+                        }else{
+                            document.getElementById("p" + i + j).style.opacity = 0;
+                        }
+                    }
+                    if(drop[i] > 0){
+                        document.getElementById("d" + i).src = drop[i] + ".jpg";
+                        document.getElementById("d" + i).style.opacity = 0.5;
+                    }else{
+                        document.getElementById("d" + i).style.opacity = 0;
+                    }
+                }
+                if(max > 0){
+                    document.getElementById("banner").src = max + ".jpg";
+                    if(max < 9){
+                        document.getElementById("banner").style.borderRadius = "50%";
+                    }else{
+                        document.getElementById("banner").style.borderRadius = "0%";
+                    }
+                }
+                if(score > 0){
+                    document.getElementById("score").innerHTML = score;
+                }
+            }
+
+        </script>
+    </body>
+</html>
