@@ -140,6 +140,7 @@
                             planeDown++;
                             if(planeDown > 2){
                                 alert("恭喜你击败了全国" + Math.floor((100 - clickCount) / 97 * 99) + "%的玩家，你啥也不是。");
+                                window.location.href = window.location.href.split("?")[0];
                             }
                         }else if(grid[x][y] == 1){
                             document.getElementById("b" + x + y).style.backgroundColor = "#FFFF00";
