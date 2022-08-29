@@ -105,7 +105,7 @@
 
                 if(bottles[i] == 0){
                     document.getElementById("up" + i).style.visibility = "hidden";
-                    document.getElementById("down" + i).style.visibility = i == 0 || balls[i - 1] < 2 ? "visible" : "hidden";
+                    document.getElementById("down" + i).style.visibility = (i == 0 || balls[i - 1] < 2) && key - i < 2 ? "visible" : "hidden";
                 }else if(bottles[i] == 1){
                     document.getElementById("up" + i).style.visibility = (i == 0 || balls[i - 1] < 2) && balls[i] > 1 ? "visible" : "hidden";
                     document.getElementById("down" + i).style.visibility = key == i && (i == 0 || balls[i - 1] < 2) ? "visible" : "hidden";
