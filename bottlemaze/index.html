@@ -94,7 +94,7 @@
                 document.getElementById("right").style.visibility = "hidden";
                 document.getElementById("left").style.visibility = "hidden";
             }else{
-                document.getElementById("right").style.visibility = (key == 0 || bottles[key - 1] < 1) ? "visible" : "hidden";
+                document.getElementById("right").style.visibility = (key == 0 || bottles[key - 1] < 1 &&  key < 5) ? "visible" : "hidden";
                 document.getElementById("left").style.visibility = key > 0 ? "visible" : "hidden";
             }
 
